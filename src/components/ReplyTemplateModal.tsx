@@ -78,15 +78,14 @@ const ReplyTemplateModal: FC<Props> = ({
       <InputBox
         onChange={(e) => setName(e)}
         value={name}
-        label="Field"
-        placeholder="Field"
+        label="Name"
         className="mb-3"
       />
       <InputBox
         onChange={(e) => setSubject(e)}
         value={subject}
         label="Value"
-        placeholder="Value"
+        placeholder='e.g. "RE: {original_subject}"'
         className="mb-3"
       />
       <div

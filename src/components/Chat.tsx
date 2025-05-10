@@ -1,8 +1,10 @@
 import axios from "axios";
 import clsx from "clsx";
 import { useEffect, useRef, useState, type FC } from "react";
-import { FaMicrophoneAlt, FaTelegramPlane } from "react-icons/fa";
+import { FaMicrophoneAlt, FaTelegramPlane, FaUserAlt } from "react-icons/fa";
+import { MdMemory } from "react-icons/md";
 import { io, Socket } from "socket.io-client";
+import Markdown from "../library/Markdown";
 import { SwtichWithLabel } from "../library/Switch";
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
@@ -54,9 +56,29 @@ const Chat: FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={clsx("flex flex-col gap-2 w-full", className)}>
+    <div className={clsx("flex flex-col gap-2", className)}>
       <div className="text-lg">Chat</div>
-      <div className="bg-gray-800 rounded min-h-40 md:min-h-60"></div>
+      <div className="bg-gray-800 px-2 py-5 rounded min-h-40 md:min-h-60 max-h-96 grow overflow-y-auto flex flex-col gap-2">
+        {chatHistory.map((chat, index) => (
+          <div
+            key={`chat-${index}`}
+            className="p-1.5 rounded flex gap-3 bg-gray-900"
+          >
+            <div>
+              <div className="size-10 rounded bg-gray-800 text-gray-400 flex items-center justify-center">
+                {chat.sender === "user" ? (
+                  <FaUserAlt />
+                ) : (
+                  <MdMemory className="text-2xl" />
+                )}
+              </div>
+            </div>
+            <Markdown className="flex flex-col justify-center">
+              {chat.text}
+            </Markdown>
+          </div>
+        ))}
+      </div>
       <div className="flex items-center gap-3">
         <div className="grow flex items-center relative">
           <input
